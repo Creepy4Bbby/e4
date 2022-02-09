@@ -20,29 +20,32 @@ if(isset($_POST['username']) && isset($_POST['password']))
     
     // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
     // pour éliminer toute attaque de type injection SQL et XSS
-    // $username = mysqli_real_escape_string($db,htmlspecialchars($_POST['username'])); 
-    // $password = mysqli_real_escape_string($db,htmlspecialchars($_POST['password']));
+    $username = $_POST['username']; 
+    $password = $_POST['password'];
     
     if($username !== "" && $password !== "")
     {
-        $requete = "SELECT count(*) FROM utilisateur where 
+        $requete = "SELECT count(*) FROM test where 
         nom_utilisateur = '".$username."' and mot_de_passe = '".$password."' ";
         $exec_requete = $pdo->query($pdo,$requete);
-        $reponse      = $pdo->query($exec_requete);
+        $reponse = $pdo->query($exec_requete);
         $count = $reponse['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
-           $_SESSION['admin'] = 'YUMEKO';
-           header("Location: Etat.php");
+           $_SESSION['admin'] = '$username';
+           header("Location: accueil.php");
          
         }
         else
         {
+           $err = 1 ;
            header('Location: Connection.php?erreur=1'); // utilisateur ou mot de passe incorrect
+      
         }
     }
     else
     {
+       $err = 2;
        header('Location: Connection.php?erreur=2'); // utilisateur ou mot de passe vide
     }
 }
