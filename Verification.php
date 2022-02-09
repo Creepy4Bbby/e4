@@ -1,11 +1,11 @@
 <?php
 session_start();
-if(isset($_POST['username']) && isset($_POST['password']))
+if(isset($_POST['pseudo']) && isset($_POST['password']))
 {
     // connexion à la base de données
     $db_username = 'root';
     $db_password = '';
-    $db_name = 'Gens';
+    $db_name = 'compte';
     $db_host = 'localhost';
     $db_port = 3307;
     // $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
@@ -20,19 +20,19 @@ if(isset($_POST['username']) && isset($_POST['password']))
     
     // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
     // pour éliminer toute attaque de type injection SQL et XSS
-    $username = $_POST['username']; 
+    $username = $_POST['pseudo']; 
     $password = $_POST['password'];
     
     if($username !== "" && $password !== "")
     {
-        $requete = "SELECT count(*) FROM test where 
-        nom_utilisateur = '".$username."' and mot_de_passe = '".$password."' ";
+        $requete = "SELECT count(*) FROM compte where 
+        pseudo = '".$username."' and password = '".$password."' ";
         $exec_requete = $pdo->query($pdo,$requete);
         $reponse = $pdo->query($exec_requete);
         $count = $reponse['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
-           $_SESSION['admin'] = '$username';
+           $_SESSION['pseudo'] = '$username';
            header("Location: accueil.php");
          
         }

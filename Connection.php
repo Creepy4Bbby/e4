@@ -12,7 +12,7 @@
                 <h1>Connexion</h1>
                 
                 <label><b>Adresse email</b></label>
-                <input type="text" placeholder="Entrer Votre Email" name="username" required>
+                <input type="text" placeholder="Entrer Votre Email" name="pseudo" required>
 
                 <label><b>Mot de passe</b></label>
                 <input type="password" placeholder="Entrer le mot de passe" name="password" required>
