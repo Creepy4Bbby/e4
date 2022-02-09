@@ -5,15 +5,23 @@ if(isset($_POST['username']) && isset($_POST['password']))
     // connexion à la base de données
     $db_username = 'root';
     $db_password = '';
-    $db_name     = 'utilisateur';
-    $db_host     = 'localhost';
-    $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
-         or die('Impossible de se connecter à la BDD');
+    $db_name = 'test';
+    $db_host = 'localhost';
+    $db_port = 3307;
+    // $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
+    //      or die('Impossible de se connecter à la BDD');
+
+    $pdo = new PDO('mysql:host='.$db_host.';port='.$db_port.';db_name='.db_name.'',$db_username,$db_password);
+
+    // $pdo = new PDO('mysql:host='.$dbhost.';port='.$db_port.';dbname='.$db.'', $dbuser, $dbpasswd);
+
+
+    $pdo->exec("SET CHARACTER SET utf8");
     
     // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
     // pour éliminer toute attaque de type injection SQL et XSS
-    $username = mysqli_real_escape_string($db,htmlspecialchars($_POST['username'])); 
-    $password = mysqli_real_escape_string($db,htmlspecialchars($_POST['password']));
+    // $username = mysqli_real_escape_string($db,htmlspecialchars($_POST['username'])); 
+    // $password = mysqli_real_escape_string($db,htmlspecialchars($_POST['password']));
     
     if($username !== "" && $password !== "")
     {
@@ -42,5 +50,6 @@ else
 {
    header('Location: Connection.php');
 }
-mysqli_close($db); // fermer la connexion
+// mysqli_close($db); // fermer la connexion
+$pdo = null;
 ?>
