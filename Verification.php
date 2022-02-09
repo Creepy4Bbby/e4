@@ -11,7 +11,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
     // $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
     //      or die('Impossible de se connecter à la BDD');
 
-    $pdo = new PDO('mysql:host='.$db_host.';port='.$db_port.';db_name='.db_name.'',$db_username,$db_password);
+    $pdo = new PDO('mysql:host='.$db_host.';port='.$db_port.';db_name='.$db_name.'',$db_username,$db_password);
 
     // $pdo = new PDO('mysql:host='.$dbhost.';port='.$db_port.';dbname='.$db.'', $dbuser, $dbpasswd);
 
@@ -26,9 +26,9 @@ if(isset($_POST['username']) && isset($_POST['password']))
     if($username !== "" && $password !== "")
     {
         $requete = "SELECT count(*) FROM utilisateur where 
-              nom_utilisateur = '".$username."' and mot_de_passe = '".$password."' ";
-        $exec_requete = mysqli_query($db,$requete);
-        $reponse      = mysqli_fetch_array($exec_requete);
+        nom_utilisateur = '".$username."' and mot_de_passe = '".$password."' ";
+        $exec_requete = $pdo->query($pdo,$requete);
+        $reponse      = $pdo->query($exec_requete);
         $count = $reponse['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
