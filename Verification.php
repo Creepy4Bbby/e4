@@ -38,14 +38,14 @@ if(isset($_POST['username']) && isset($_POST['password']))
         }
         else
         {
-           $err = 1 ;
+         //   $err = 1 ;
            header('Location: Connection.php?erreur=1'); // utilisateur ou mot de passe incorrect
       
         }
     }
     else
     {
-       $err = 2;
+      // $err = 2;
        header('Location: Connection.php?erreur=2'); // utilisateur ou mot de passe vide
     }
 }
