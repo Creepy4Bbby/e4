@@ -32,7 +32,7 @@ if(isset($_POST['pseudo']) && isset($_POST['password']))
         $count = $reponse['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
-           $_SESSION['pseudo'] = '$username';
+           $_SESSION['pseudo'] = $username;
            header("Location: accueil.php");
          
         }

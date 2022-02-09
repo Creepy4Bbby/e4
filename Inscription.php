@@ -1,9 +1,5 @@
 <?php
-
-
-
-
-
+Include 'Verification.php'
 
 ?>
 
