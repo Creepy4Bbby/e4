@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_POST['email']) && isset($_POST['mdp']))
+if(isset($_POST['login']) && isset($_POST['mdp']))
 {
     // connexion à la base de données
     $db_username = 'root';
@@ -18,40 +18,24 @@ if(isset($_POST['email']) && isset($_POST['mdp']))
 
     $pdo->exec("SET CHARACTER SET utf8");
     
-    $username = $_POST['email']; 
+    // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
+    // pour éliminer toute attaque de type injection SQL et XSS
+    $username = $_POST['login']; 
     $password = $_POST['mdp'];
-    
     
     if($username !== "" && $password !== "")
     {
-        $requete = "SELECT count(*) FROM utilisateur where 
-        email = '".$username."' and mdp = '".$password."' ";
+        $requete = "INSERT into 'user' FROM (login,mdp,nom) 
+        VALUES ('$login','$nom','$mdp');
+    
         $exec_requete = $pdo->query($pdo,$requete);
         $reponse = $pdo->query($exec_requete);
         $count = $reponse['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
-           $_SESSION['email'] = $username;
-           header("Location: accueil.php");
-         
+            echo "<div class='sucess'>
+            <h3>Vous êtes inscrit avec succès.</h3>
+            <p>Cliquez ici pour vous <a href='login.php'>connecter</a></p>
+      </div>";
         }
-        else
-        {
-         //   $err = 1 ;
-           header('Location: Connection.php?erreur=1'); // utilisateur ou mot de passe incorrect
-      
-        }
-    }
-    else
-    {
-      // $err = 2;
-       header('Location: Connection.php?erreur=2'); // utilisateur ou mot de passe vide
-    }
-}
-else
-{
-   header('Location: Connection.php');
-}
-// mysqli_close($db); // fermer la connexion
-$pdo = null;
-?>
+        ?>
